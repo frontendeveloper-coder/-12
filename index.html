@@ -1,39 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Генератор QR-кодов</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="page">
-      <div class="container">
-        <div class="brand">
-          <h1>Генератор QR-кодов</h1>
-        </div>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Генератор паролей</title>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<main class="page">
+			<div class="container">
+				<header class="brand">
+					<svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 1 18 0A9 9 0 0 1 3 12z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+					<h1>Генератор паролей</h1>
+					<p class="subtitle">Быстро и Безопасно</p>
+				</header>
 
-        <div class="card">
-          <label class="label">Введите текст или ссылку:</label>
-          <input
-            id="qr-input"
-            class="input"
-            type="text"
-            placeholder="https://example.com"
-          />
+				<section class="card">
+					<div class="result-row">
+						<input id="passwordOutput" class="password-output" readonly aria-label="Сгенерированный пароль" value="Нажмите «Сгенерировать»" />
+						<button id="copyBtn" class="btn small" aria-label="Скопировать пароль">Копировать</button>
+					</div>
 
-          <div class="actions">
-            <button class="btn primary" id="generate">Создать QR</button>
-            <button class="btn ghost" id="download">Скачать</button>
-          </div>
+					<div class="controls">
+						<label class="row">
+							<span>Длина: <strong id="lenLabel">16</strong></span>
+							<input id="length" type="range" min="6" max="64" value="16">
+						</label>
 
-          <div class="qr-preview">
-            <canvas id="qr-canvas"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
+						<div class="checkboxes">
+							<label><input id="lower" type="checkbox" checked> a-z</label>
+							<label><input id="upper" type="checkbox" checked> A-Z</label>
+							<label><input id="numbers" type="checkbox" checked> 0-9</label>
+							<label><input id="symbols" type="checkbox" checked> @#%&*?</label>
+						</div>
 
-    <script src="script.js"></script>
-  </body>
-</html>
+						<div class="actions">
+							<button id="generateBtn" class="btn primary">Сгенерировать</button>
+							<button id="shuffleBtn" class="btn ghost">Перемешать</button>
+						</div>
+
+						<div class="meter-row">
+							<div class="strength-info">
+								<span>Надёжность:</span>
+								<strong id="strengthText">—</strong>
+							</div>
+							<div id="strength" class="strength">
+								<div class="bar"></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<details class="advanced">
+					<summary>Дополнительно</summary>
+					<div class="advanced-grid">
+						<label class="row small">
+							<input id="avoidSimilar" type="checkbox"> Избегать похожих символов (i, l, 1, L, 0, O)
+						</label>
+						<label class="row small">
+							<input id="includeEmoji" type="checkbox"> Включить эмодзи (⚠️ может усложнить ввод на некоторых сайтах)
+						</label>
+					</div>
+				</details>
+
+			</div>
+		</main>
+
+		<script src="main.js"></script>
+	</body>
+ </html>
