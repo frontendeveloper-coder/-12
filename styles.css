@@ -1,87 +1,215 @@
 :root{
---bg:#070709;
---bg2:#0d0d12;
---glass:rgba(255,255,255,0.08);
---glass-border:rgba(255,255,255,0.15);
---accent1:#7b61ff;
---accent2:#50e3c2;
---accent-glow:0 0 18px rgba(120,80,255,0.45), 0 0 28px rgba(80,227,194,0.35);
---text-muted:rgba(255,255,255,0.6);
+  --bg: #070709;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.09);
+  --accent1: #7b61ff;
+  --accent2: #50e3c2;
+  --muted: rgba(255,255,255,0.65);
 }
 
-
+/* Сброс */
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-font-family:Inter,system-ui;
-background: radial-gradient(900px 600px at 20% 10%, rgba(120,80,255,0.20), transparent),
-radial-gradient(700px 500px at 80% 90%, rgba(80,227,194,0.15), transparent),
-var(--bg);
-color:#fff;
-padding:40px 20px;
-overflow-x:hidden;
+html,body{height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:
+  radial-gradient(900px 600px at 20% 10%, rgba(120,80,255,0.16), transparent),
+  radial-gradient(700px 500px at 80% 90%, rgba(80,227,194,0.10), transparent),
+  var(--bg);
+  color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 
+/* Центр страницы, но даём ограничение по высоте чтобы не растягивалось */
+.page{
+  min-height:100vh;
+  display:flex;
+  align-items:center; /* вертикально центрируем */
+  justify-content:center;
+  padding:24px;
+}
 
-.page{display:flex;justify-content:center;align-items:center;min-height:90vh}
+/* Контейнер приложения */
 .container{
-width:100%;max-width:960px;
-padding:36px;
-border-radius:20px;
-background:linear-gradient(120deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
-border:1px solid rgba(255,255,255,0.06);
-box-shadow:0 0 40px rgba(0,0,0,0.4);
-backdrop-filter:blur(18px);
+  width:100%;
+  max-width:440px;       /* хороший размер на десктопе и планшете */
+  background:linear-gradient(120deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border:1px solid var(--glass-border);
+  border-radius:18px;
+  padding:20px;
+  gap:18px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 10px 40px rgba(0,0,0,0.45);
+  backdrop-filter:blur(14px);
+  max-height:90vh;       /* чтобы не выползало за экран */
+  overflow:auto;         /* скролл внутри контейнера при необходимости */
 }
 
+/* Блок бренда: логотип + текст */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding-bottom:4px;
+}
 
-.brand{display:flex;align-items:center;gap:16px;margin-bottom:18px}
-.logo{width:50px;height:50px;color:#fff;filter:drop-shadow(0 0 12px rgba(255,255,255,0.25))}
-.brand h1{font-size:26px}
-.subtitle{font-size:14px;color:var(--text-muted)}
+/* Жёстко ограничиваем размер логотипа: не даст ему быть гигантским */
+.brand .logo{
+  width: clamp(44px, 8vw, 80px); /* минимально 44, максимально 80 */
+  height: auto;
+  flex:0 0 auto;
+  display:block;
+  stroke-width:1.2; /* оставляем оригинальный stroke */
+  opacity:0.98;
+}
 
+/* Текст рядом с логотипом: заголовок и подзаголовок */
+.brand h1{
+  font-size: clamp(18px, 3.2vw, 22px); /* не даём заголовку перерастать */
+  line-height:1;
+  margin-right:auto; /* отталкивает от правой стороны */
+  font-weight:700;
+}
 
+.subtitle{
+  color:var(--muted);
+  font-size:13px;
+  margin-left:8px;
+  white-space:nowrap;
+  opacity:0.95;
+}
+
+/* Основная карточка с контролами */
 .card{
-background:var(--glass);
-padding:24px;
-border-radius:16px;
-border:1px solid var(--glass-border);
-backdrop-filter:blur(14px);
-box-shadow:0 0 26px rgba(0,0,0,0.35);
+  background:var(--glass);
+  border-radius:14px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.06);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
 
-
+/* Результат + кнопка копирования */
 .result-row{
-display:flex;gap:12px;align-items:center;margin-bottom:14px
+  display:flex;
+  gap:10px;
+  align-items:center;
+  width:100%;
+  flex-wrap:nowrap;
 }
+
+/* Поле вывода пароля: ограничиваем по ширине, добавляем ellipsis */
 .password-output{
-flex:1;
-padding:14px 16px;
-border-radius:12px;
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(255,255,255,0.12);
-color:#fff;
-font-size:15px;font-weight:600;
+  flex:1 1 auto;
+  min-width:0; /* важно для ellipsis при flex */
+  padding:12px 14px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.10);
+  color:#fff;
+  font-weight:600;
+  font-size:15px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.checkboxes {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
+/* Кнопка копирования компактная */
+#copyBtn{
+  flex:0 0 auto;
+  padding:10px 14px;
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--accent2), #2fd3b3);
+  color:#012;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
 }
 
-.actions {
-    display: flex;
-    gap: 10px;
-    padding: 20px 0px 20px 0px;
-    border-radius: 10px;
+/* Контролы под результатом */
+.controls{display:flex;flex-direction:column;gap:12px;width:100%}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px}
+.row.small{font-size:13px}
+
+/* Слайдер длины */
+input[type="range"]{width:100%;margin-left:8px}
+
+/* Чекбоксы: перенос на несколько колонок на широкой сетке */
+.checkboxes{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
 }
 
-.btn {
-    background-color: #50e3c2;
-    border-radius: 10px;
-    border: none;
-    padding: 8px;
-    color: black;
+/* Действия: генерация и перемешать */
+.actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
+/* Основные кнопки */
+.btn{
+  padding:12px 18px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  font-size:15px;
+}
+
+/* primary и ghost стили */
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent1), #6e5aff);
+  color:#fff;
+  box-shadow: var(--accent-glow);
+}
+
+.btn.ghost{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+/* Полоска надёжности */
+.meter-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.strength-info{font-size:13px;color:var(--muted)}
+.strength{
+  flex:1 1 auto;
+  height:10px;
+  background:rgba(255,255,255,0.08);
+  border-radius:8px;
+  overflow:hidden;
+}
+.strength .bar{
+  width:0%;
+  height:100%;
+  transition:width 0.25s ease;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+}
+
+/* Advanced details */
+.advanced summary{cursor:pointer;font-weight:600;color:var(--muted)}
+.advanced-grid{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+
+/* --- Адаптив (телефон / узкие экраны) --- */
+@media (max-width:480px){
+  .container{max-width:420px;padding:16px}
+  .brand{gap:10px}
+  .brand h1{font-size:18px}
+  .brand .logo{width:48px}
+  .result-row{flex-direction:column;align-items:stretch}
+  #copyBtn{width:100%}
+  .actions{flex-direction:column}
+  .checkboxes{flex-direction:column;align-items:flex-start}
+  .btn{width:100%}
+  .subtitle{display:none} /* в мобильной версии скрываем мелкий подзаголовок, чтобы не занимал место */
+}
+
+/* --- Десктоп: немного увеличить пространство между блоками --- */
+@media (min-width:900px){
+  .container{max-width:480px;padding:28px}
+  .brand .logo{width:72px}
+  .brand h1{font-size:22px}
+}
