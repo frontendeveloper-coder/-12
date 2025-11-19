@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Генератор QR-кодов</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="container">
+        <div class="brand">
+          <h1>Генератор QR-кодов</h1>
+        </div>
+
+        <div class="card">
+          <label class="label">Введите текст или ссылку:</label>
+          <input
+            id="qr-input"
+            class="input"
+            type="text"
+            placeholder="https://example.com"
+          />
+
+          <div class="actions">
+            <button class="btn primary" id="generate">Создать QR</button>
+            <button class="btn ghost" id="download">Скачать</button>
+          </div>
+
+          <div class="qr-preview">
+            <canvas id="qr-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
